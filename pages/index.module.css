@@ -78,6 +78,26 @@
   animation: pulse 2s infinite;
 }
 
+.darkModeToggle {
+  background: #f8f8f8;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #666;
+  margin-left: auto;
+}
+
+.darkModeToggle:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
