@@ -12,6 +12,13 @@
   padding: 24px;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 8px;
+    justify-content: flex-start;
+  }
+}
+
 .chatContainer {
   box-sizing: border-box;
   background: white;
@@ -26,6 +33,14 @@
   position: relative;
 }
 
+@media (max-width: 768px) {
+  .chatContainer {
+    height: calc(100vh - 16px);
+    border-radius: 8px;
+    max-width: 100%;
+  }
+}
+
 .chatHeader {
   background: white;
   color: #1f1f1f;
@@ -34,6 +49,16 @@
   align-items: center;
   gap: 16px;
   border-bottom: 1px solid #f5f5f5;
+  box-sizing: border-box;
+  min-height: 80px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .chatHeader {
+    padding: 16px;
+    gap: 12px;
+  }
 }
 
 .botAvatar {
@@ -52,12 +77,20 @@
   border-radius: 4px;
 }
 
+.headerInfo {
+  flex: 1;
+  min-width: 0;
+}
+
 .headerInfo h1 {
   margin: 0;
   font-size: 20px;
   font-weight: 500;
   color: #1f1f1f;
   letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .status {
@@ -241,6 +274,7 @@
   background: white;
   padding: 24px;
   border-top: 1px solid #f5f5f5;
+  box-sizing: border-box;
 }
 
 .imagePreview {
@@ -282,6 +316,67 @@
   background: rgba(0, 0, 0, 0.8);
 }
 
+.audioPreview {
+  position: relative;
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.audioInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.audioInfo span {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.audioPlayer {
+  width: 100%;
+  height: 32px;
+}
+
+.removeAudioButton {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.removeAudioButton:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.audioContainer {
+  margin: 8px 0;
+}
+
+.messageAudio {
+  width: 100%;
+  max-width: 250px;
+  height: 32px;
+}
+
 .inputActions {
   display: flex;
   gap: 10px;
@@ -304,6 +399,8 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .actionButton:hover:not(:disabled) {
@@ -415,6 +512,8 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .messageInput {
@@ -454,6 +553,8 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .sendButton:hover:not(:disabled) {
@@ -498,11 +599,22 @@
   }
 
   .chatHeader {
-    padding: 20px;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .headerInfo h1 {
+    font-size: 18px;
+  }
+
+  .darkModeToggle {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
   }
 
   .messagesContainer {
-    padding: 20px;
+    padding: 16px;
   }
 
   .messageContent {
@@ -524,16 +636,27 @@
   }
 
   .inputContainer {
-    padding: 18px;
+    padding: 12px;
   }
 
   .inputActions {
     gap: 8px;
   }
 
+  .inputRow {
+    gap: 6px;
+  }
+
+  .messageInput {
+    min-width: 0;
+    flex: 1;
+  }
+
   .actionButton {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .previewImage {

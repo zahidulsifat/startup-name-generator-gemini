@@ -17,6 +17,7 @@ export default function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [recordedAudio, setRecordedAudio] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -40,23 +41,26 @@ export default function Home() {
 
   async function sendMessage(event) {
     event.preventDefault();
-    if (!inputMessage.trim() && !selectedImage) return;
+    if (!inputMessage.trim() && !selectedImage && !recordedAudio) return;
 
     const userMessage = {
       id: Date.now(),
       type: 'user',
-      text: inputMessage,
+      text: inputMessage || (recordedAudio ? '🎤 Voice message' : ''),
       image: selectedImage,
+      audio: recordedAudio,
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
     setInputMessage("");
     setSelectedImage(null);
+    const audioToSend = recordedAudio;
+    setRecordedAudio(null);
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api/gemini-simple", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,6 +68,7 @@ export default function Home() {
         body: JSON.stringify({
         startup: inputMessage,
         image: selectedImage,
+        audio: audioToSend,
       }),
       });
       const data = await response.json();
@@ -89,14 +94,64 @@ export default function Home() {
     setIsLoading(false);
   }
 
-  function handleImageSelect(event) {
+  function compressImage(file, maxSizeKB = 300) {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+
+      img.onload = () => {
+        const maxWidth = 512;
+        const maxHeight = 512;
+        let { width, height } = img;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = (width * maxHeight) / height;
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let quality = 0.8;
+        let dataUrl = canvas.toDataURL('image/jpeg', quality);
+
+        while (dataUrl.length > maxSizeKB * 1024 && quality > 0.1) {
+          quality -= 0.1;
+          dataUrl = canvas.toDataURL('image/jpeg', quality);
+        }
+
+        resolve(dataUrl);
+      };
+
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  async function handleImageSelect(event) {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setSelectedImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const compressedImage = await compressImage(file);
+        setSelectedImage(compressedImage);
+      } catch (error) {
+        console.error('Error compressing image:', error);
+        // Fallback to original method
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setSelectedImage(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   }
 
@@ -107,19 +162,52 @@ export default function Home() {
     }
   }
 
+  function removeRecordedAudio() {
+    setRecordedAudio(null);
+  }
+
   async function startRecording() {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
+      // Check if getUserMedia is supported
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert('Voice recording is not supported on this device/browser');
+        return;
+      }
+
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      });
+
+      // Try different MIME types for better mobile compatibility
+      let mimeType = 'audio/webm';
+      if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+        mimeType = 'audio/webm;codecs=opus';
+      } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+        mimeType = 'audio/mp4';
+      } else if (MediaRecorder.isTypeSupported('audio/wav')) {
+        mimeType = 'audio/wav';
+      }
+
+      const recorder = new MediaRecorder(stream, { mimeType });
       const audioChunks = [];
 
       recorder.ondataavailable = (event) => {
-        audioChunks.push(event.data);
+        if (event.data.size > 0) {
+          audioChunks.push(event.data);
+        }
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        // Here you could convert audio to text using speech recognition API
+        const audioBlob = new Blob(audioChunks, { type: mimeType });
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setRecordedAudio(e.target.result);
+        };
+        reader.readAsDataURL(audioBlob);
         stream.getTracks().forEach(track => track.stop());
       };
 
@@ -128,6 +216,19 @@ export default function Home() {
       setIsRecording(true);
     } catch (error) {
       console.error('Error accessing microphone:', error);
+      let errorMessage = 'Could not access microphone. ';
+
+      if (error.name === 'NotAllowedError') {
+        errorMessage += 'Please allow microphone permission in your browser settings.';
+      } else if (error.name === 'NotFoundError') {
+        errorMessage += 'No microphone found on this device.';
+      } else if (error.name === 'NotReadableError') {
+        errorMessage += 'Microphone is being used by another application.';
+      } else {
+        errorMessage += 'Please try again or check your device settings.';
+      }
+
+      alert(errorMessage);
     }
   }
 
@@ -158,7 +259,7 @@ export default function Home() {
       <Head>
         <title>AI Startup Name Generator</title>
         <link rel="icon" href="/logo.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       </Head>
 
       <div className={`${styles.chatContainer} ${isDarkMode ? styles.darkMode : ''}`}>
@@ -205,6 +306,11 @@ export default function Home() {
                       <img src={message.image} alt="Uploaded" className={styles.messageImage} />
                     </div>
                   )}
+                  {message.audio && (
+                    <div className={styles.audioContainer}>
+                      <audio controls src={message.audio} className={styles.messageAudio} />
+                    </div>
+                  )}
                   <p>{message.text}</p>
                   <span className={styles.timestamp}>
                     {isClient ? message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
@@ -245,6 +351,21 @@ export default function Home() {
               </button>
             </div>
           )}
+          {recordedAudio && (
+            <div className={styles.audioPreview}>
+              <div className={styles.audioInfo}>
+                <span>🎤 Audio recorded</span>
+                <audio controls src={recordedAudio} className={styles.audioPlayer} />
+              </div>
+              <button
+                type="button"
+                onClick={removeRecordedAudio}
+                className={styles.removeAudioButton}
+              >
+                ×
+              </button>
+            </div>
+          )}
           <form onSubmit={sendMessage} className={styles.messageForm}>
             <div className={styles.inputActions}>
               <input
@@ -270,7 +391,7 @@ export default function Home() {
                 onClick={toggleRecording}
                 className={`${styles.actionButton} ${isRecording ? styles.recording : ''}`}
                 disabled={isLoading}
-                title={isRecording ? "Stop recording" : "Start voice recording"}
+                title={isRecording ? "Tap to stop recording" : "Tap to start voice recording"}
               >
                 <svg viewBox="0 0 24 24" width="20" height="20">
                   {isRecording ? (
@@ -293,7 +414,7 @@ export default function Home() {
               <button
                 type="submit"
                 className={styles.sendButton}
-                disabled={isLoading || (!inputMessage.trim() && !selectedImage)}
+                disabled={isLoading || (!inputMessage.trim() && !selectedImage && !recordedAudio)}
               >
                 <svg viewBox="0 0 24 24" width="20" height="20">
                   <path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
