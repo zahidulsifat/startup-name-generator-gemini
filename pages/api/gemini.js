@@ -12,23 +12,73 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { startup } = req.body;
-    
-    if (!startup) {
-      res.status(400).json({ error: 'Startup description is required' });
+    const { startup, image, audio } = req.body;
+
+    if (!startup && !image && !audio) {
+      res.status(400).json({ error: 'At least one input (text, image, or audio) is required' });
       return;
     }
 
-    const prompt = generatePrompt(startup);
-    
+    const parts = [];
+
+    // Add text prompt if provided
+    if (startup) {
+      const prompt = generatePrompt(startup);
+      parts.push({ text: prompt });
+    }
+
+    // Add image if provided
+    if (image) {
+      // Remove data URL prefix and get just the base64 data
+      const base64Data = image.split(',')[1];
+      const mimeType = image.split(';')[0].split(':')[1];
+
+      parts.push({
+        inlineData: {
+          mimeType: mimeType,
+          data: base64Data
+        }
+      });
+
+      // Add context for image analysis
+      if (!startup) {
+        parts.push({
+          text: "Based on this image, suggest 3 creative startup names with brief explanations for each. Be conversational and friendly in your response."
+        });
+      } else {
+        parts.push({
+          text: "Also consider this image in your startup name suggestions."
+        });
+      }
+    }
+
+    // Add audio if provided
+    if (audio) {
+      const base64Data = audio.split(',')[1];
+      const mimeType = audio.split(';')[0].split(':')[1];
+
+      parts.push({
+        inlineData: {
+          mimeType: mimeType,
+          data: base64Data
+        }
+      });
+
+      if (!startup && !image) {
+        parts.push({
+          text: "Based on this audio, suggest 3 creative startup names with brief explanations for each. Be conversational and friendly in your response."
+        });
+      } else {
+        parts.push({
+          text: "Also consider this audio in your startup name suggestions."
+        });
+      }
+    }
+
     const requestBody = {
       contents: [
         {
-          parts: [
-            {
-              text: prompt
-            }
-          ]
+          parts: parts
         }
       ],
       generationConfig: {
@@ -55,7 +105,7 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    
+
     if (data.candidates && data.candidates[0] && data.candidates[0].content) {
       const generatedText = data.candidates[0].content.parts[0].text;
       res.status(200).json({ result: generatedText });
