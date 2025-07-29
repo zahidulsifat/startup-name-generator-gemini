@@ -468,25 +468,25 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
-    padding: 10px;
+    padding: 16px;
   }
-  
+
   .chatContainer {
-    height: calc(100vh - 40px);
+    height: calc(100vh - 32px);
     max-height: none;
-    border-radius: 0;
+    border-radius: 8px;
   }
-  
+
   .chatHeader {
-    border-radius: 0;
+    padding: 20px;
   }
-  
+
   .messagesContainer {
-    padding: 15px;
+    padding: 20px;
   }
-  
+
   .messageContent {
-    max-width: 90%;
+    max-width: 85%;
   }
 }
 
