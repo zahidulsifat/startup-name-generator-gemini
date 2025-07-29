@@ -113,7 +113,7 @@ export default function Home() {
                 <div className={styles.messageBubble}>
                   <p>{message.text}</p>
                   <span className={styles.timestamp}>
-                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    {isClient ? message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
                   </span>
                 </div>
               </div>
