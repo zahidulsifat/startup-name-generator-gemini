@@ -24,7 +24,7 @@
    ```bash
    $ cp .env.example .env
    ```
-6. Add your [API key]([https://beta.openai.com/account/api-keys](https://aistudio.google.com/prompts/new_chat) to the newly created `.env` file
+6. Add your [API key]([https://aistudio.google.com/prompts/new_chat]) to the newly created `.env` file
 
 7. Run the app
 
