@@ -101,8 +101,8 @@ export default function Home() {
       const img = new Image();
 
       img.onload = () => {
-        const maxWidth = 1024;
-        const maxHeight = 1024;
+        const maxWidth = 512;
+        const maxHeight = 512;
         let { width, height } = img;
 
         if (width > height) {
