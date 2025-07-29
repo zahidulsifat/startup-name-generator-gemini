@@ -15,6 +15,7 @@ export default function Home() {
   const [openaiApiKey, setOpenaiApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showApiKeyInput, setShowApiKeyInput] = useState(true);
+  const [isClient, setIsClient] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
