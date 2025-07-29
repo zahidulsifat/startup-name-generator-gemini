@@ -259,7 +259,7 @@ export default function Home() {
       <Head>
         <title>AI Startup Name Generator</title>
         <link rel="icon" href="/logo.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       </Head>
 
       <div className={`${styles.chatContainer} ${isDarkMode ? styles.darkMode : ''}`}>
