@@ -38,6 +38,13 @@ export default function Home() {
         <form onSubmit={onSubmit}>
           <input
             type="text"
+            name="openai-api-key"
+            placeholder="Enter your OpenAI API key"
+            value={openaiApiKey}
+            onChange={(e) => setOpenaiApiKey(e.target.value)}
+          />
+          <input
+            type="text"
             name="startup"
             placeholder="Enter a startup domain"
             value={startupInput}
