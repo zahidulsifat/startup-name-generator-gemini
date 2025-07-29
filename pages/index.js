@@ -130,6 +130,7 @@ export default function Home() {
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className={styles.inputContainer}>
