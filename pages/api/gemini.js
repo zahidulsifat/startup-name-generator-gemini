@@ -89,18 +89,43 @@ export default async function handler(req, res) {
       }
     };
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody)
-    });
+    // Try with retries for overloaded model
+    let response;
+    let attempts = 0;
+    const maxAttempts = 3;
 
-    if (!response.ok) {
+    while (attempts < maxAttempts) {
+      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (response.ok) {
+        break;
+      }
+
       const errorData = await response.json();
-      console.error('Gemini API error:', errorData);
-      res.status(response.status).json({ error: 'Failed to generate startup names' });
+      console.error(`Gemini API error (attempt ${attempts + 1}):`, errorData);
+
+      if (response.status === 503 && attempts < maxAttempts - 1) {
+        // Wait before retry for overloaded model
+        await new Promise(resolve => setTimeout(resolve, 1000 * (attempts + 1)));
+        attempts++;
+        continue;
+      }
+
+      // For other errors or max attempts reached
+      let errorMessage = 'Failed to generate startup names';
+      if (response.status === 503) {
+        errorMessage = 'The AI model is currently overloaded. Please try again in a moment.';
+      } else if (response.status === 400) {
+        errorMessage = 'Invalid request. Please try with a smaller image or shorter audio.';
+      }
+
+      res.status(response.status).json({ error: errorMessage });
       return;
     }
 
