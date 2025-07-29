@@ -15,11 +15,11 @@
 .chatContainer {
   box-sizing: border-box;
   background: white;
-  border-radius: 20px;
-  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
   width: 100%;
-  max-width: 500px;
-  height: 700px;
+  max-width: 480px;
+  height: 680px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
