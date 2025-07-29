@@ -1,6 +1,6 @@
 # Open AI Startup Name Generator
 
-![Open AI Startup Name Generator Screenshot](https://github.com/zahidulsifat/startupnamegeneratoropenai/blob/main/ss.png)
+![Open AI Startup Name Generator Screenshot]
 
 ## Setup
 
