@@ -254,23 +254,25 @@ export default function Home() {
                 </svg>
               </button>
             </div>
-            <input
-              type="text"
-              placeholder="Describe your startup idea..."
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              className={styles.messageInput}
-              disabled={isLoading}
-            />
-            <button
-              type="submit"
-              className={styles.sendButton}
-              disabled={isLoading || (!inputMessage.trim() && !selectedImage)}
-            >
-              <svg viewBox="0 0 24 24" width="20" height="20">
-                <path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
-              </svg>
-            </button>
+            <div className={styles.inputRow}>
+              <input
+                type="text"
+                placeholder="Describe your startup idea..."
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                className={styles.messageInput}
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                className={styles.sendButton}
+                disabled={isLoading || (!inputMessage.trim() && !selectedImage)}
+              >
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                  <path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
+                </svg>
+              </button>
+            </div>
           </form>
         </div>
       </div>
