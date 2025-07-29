@@ -190,15 +190,15 @@
 
 .typingIndicator {
   display: flex;
-  gap: 4px;
-  padding: 8px 0;
+  gap: 3px;
+  padding: 6px 0;
 }
 
 .typingIndicator span {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #64748b;
+  background: #bbb;
   animation: typing 1.4s infinite ease-in-out;
 }
 
