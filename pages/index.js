@@ -391,7 +391,7 @@ export default function Home() {
                 onClick={toggleRecording}
                 className={`${styles.actionButton} ${isRecording ? styles.recording : ''}`}
                 disabled={isLoading}
-                title={isRecording ? "Stop recording" : "Start voice recording"}
+                title={isRecording ? "Tap to stop recording" : "Tap to start voice recording"}
               >
                 <svg viewBox="0 0 24 24" width="20" height="20">
                   {isRecording ? (
