@@ -46,15 +46,15 @@ export default function Home() {
           <input type="submit" value="Generate names" />
         </form>
         <div className={styles.result}>{result}</div>
-        //<iframe
-          //width="336"
-          //height="189"
-         // src="https://zahidulsifat.github.io"
-          //title="Web video player"
-         // frameborder="0"
-         // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-         // allowfullscreen
-        //></iframe>
+        {/*<iframe
+          width="336"
+          height="189"
+          src="https://zahidulsifat.github.io"
+          title="Web video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>*/}
       </main>
       <footer className={styles.footer}>
         Made by <a href="https://zahidulsifat.github.io">Zahidul Sifat</a>
