@@ -15,6 +15,15 @@ export default function Home() {
   const [openaiApiKey, setOpenaiApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showApiKeyInput, setShowApiKeyInput] = useState(true);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
 
   async function sendMessage(event) {
     event.preventDefault();
