@@ -161,7 +161,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className={styles.chatContainer}>
+      <div className={`${styles.chatContainer} ${isDarkMode ? styles.darkMode : ''}`}>
         <header className={styles.chatHeader}>
           <div className={styles.botAvatar}>
             <img src="/logo.png" alt="AI Bot" />
