@@ -268,6 +268,11 @@ export default function Home() {
                       <img src={message.image} alt="Uploaded" className={styles.messageImage} />
                     </div>
                   )}
+                  {message.audio && (
+                    <div className={styles.audioContainer}>
+                      <audio controls src={message.audio} className={styles.messageAudio} />
+                    </div>
+                  )}
                   <p>{message.text}</p>
                   <span className={styles.timestamp}>
                     {isClient ? message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
