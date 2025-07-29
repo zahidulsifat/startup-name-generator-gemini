@@ -181,7 +181,7 @@ export default function Home() {
       </div>
 
       <footer className={styles.footer}>
-        Made with ❤️ by <a href="https://zahidulsifat.github.io">Zahidul Sifat</a>
+        © <a href="https://zahidulsifat.github.io">Zahidul Sifat</a>. All rights reserved.
       </footer>
     </div>
   );
