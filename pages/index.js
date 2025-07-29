@@ -94,7 +94,7 @@ export default function Home() {
     setIsLoading(false);
   }
 
-  function compressImage(file, maxSizeKB = 800) {
+  function compressImage(file, maxSizeKB = 300) {
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
