@@ -94,24 +94,29 @@ export default async function handler(req, res) {
     let attempts = 0;
     const maxAttempts = 3;
     let currentModel = 'gemini-2.0-flash';
+    let apiVersion = 'v1beta';
 
     while (attempts < maxAttempts) {
-      // If we have multimodal content and previous attempts failed, try with gemini-pro-vision
+      // If we have multimodal content and previous attempts failed, try with gemini-1.5-flash
       if (attempts > 0 && (image || audio)) {
-        currentModel = 'gemini-pro-vision';
-        // For gemini-pro-vision, remove audio as it doesn't support it
-        if (audio) {
+        currentModel = 'gemini-1.5-flash';
+        apiVersion = 'v1beta';
+        // For gemini-1.5-flash, remove audio as it may not support it well
+        if (audio && attempts > 1) {
           const audioIndex = parts.findIndex(part => part.inlineData && part.inlineData.mimeType.startsWith('audio'));
           if (audioIndex > -1) {
             parts.splice(audioIndex, 1);
+            // Add text explanation instead
+            parts.push({ text: "Note: Audio input was provided but removed for compatibility." });
           }
         }
       } else if (attempts > 1 && !image && !audio) {
         // For text-only, try gemini-pro
         currentModel = 'gemini-pro';
+        apiVersion = 'v1';
       }
 
-      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:generateContent?key=${apiKey}`, {
+      response = await fetch(`https://generativelanguage.googleapis.com/${apiVersion}/models/${currentModel}:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
