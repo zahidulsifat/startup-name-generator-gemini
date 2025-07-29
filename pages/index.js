@@ -308,6 +308,21 @@ export default function Home() {
               </button>
             </div>
           )}
+          {recordedAudio && (
+            <div className={styles.audioPreview}>
+              <div className={styles.audioInfo}>
+                <span>🎤 Audio recorded</span>
+                <audio controls src={recordedAudio} className={styles.audioPlayer} />
+              </div>
+              <button
+                type="button"
+                onClick={removeRecordedAudio}
+                className={styles.removeAudioButton}
+              >
+                ×
+              </button>
+            </div>
+          )}
           <form onSubmit={sendMessage} className={styles.messageForm}>
             <div className={styles.inputActions}>
               <input
