@@ -89,13 +89,29 @@ export default async function handler(req, res) {
       }
     };
 
-    // Try with retries for overloaded model
+    // Try with retries and fallback models
     let response;
     let attempts = 0;
     const maxAttempts = 3;
+    let currentModel = 'gemini-2.0-flash';
 
     while (attempts < maxAttempts) {
-      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+      // If we have multimodal content and previous attempts failed, try with gemini-pro-vision
+      if (attempts > 0 && (image || audio)) {
+        currentModel = 'gemini-pro-vision';
+        // For gemini-pro-vision, remove audio as it doesn't support it
+        if (audio) {
+          const audioIndex = parts.findIndex(part => part.inlineData && part.inlineData.mimeType.startsWith('audio'));
+          if (audioIndex > -1) {
+            parts.splice(audioIndex, 1);
+          }
+        }
+      } else if (attempts > 1 && !image && !audio) {
+        // For text-only, try gemini-pro
+        currentModel = 'gemini-pro';
+      }
+
+      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
