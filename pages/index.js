@@ -168,16 +168,41 @@ export default function Home() {
 
   async function startRecording() {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      // Check if getUserMedia is supported
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert('Voice recording is not supported on this device/browser');
+        return;
+      }
+
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      });
+
+      // Try different MIME types for better mobile compatibility
+      let mimeType = 'audio/webm';
+      if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+        mimeType = 'audio/webm;codecs=opus';
+      } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+        mimeType = 'audio/mp4';
+      } else if (MediaRecorder.isTypeSupported('audio/wav')) {
+        mimeType = 'audio/wav';
+      }
+
+      const recorder = new MediaRecorder(stream, { mimeType });
       const audioChunks = [];
 
       recorder.ondataavailable = (event) => {
-        audioChunks.push(event.data);
+        if (event.data.size > 0) {
+          audioChunks.push(event.data);
+        }
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const audioBlob = new Blob(audioChunks, { type: mimeType });
         const reader = new FileReader();
         reader.onload = (e) => {
           setRecordedAudio(e.target.result);
@@ -191,6 +216,19 @@ export default function Home() {
       setIsRecording(true);
     } catch (error) {
       console.error('Error accessing microphone:', error);
+      let errorMessage = 'Could not access microphone. ';
+
+      if (error.name === 'NotAllowedError') {
+        errorMessage += 'Please allow microphone permission in your browser settings.';
+      } else if (error.name === 'NotFoundError') {
+        errorMessage += 'No microphone found on this device.';
+      } else if (error.name === 'NotReadableError') {
+        errorMessage += 'Microphone is being used by another application.';
+      } else {
+        errorMessage += 'Please try again or check your device settings.';
+      }
+
+      alert(errorMessage);
     }
   }
 
