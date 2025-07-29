@@ -20,12 +20,22 @@ export default async function (req, res) {
     });
     const openaiInstance = new OpenAIApi(config);
 
-    const completion = await openaiInstance.createCompletion({
-      model: "text-davinci-003",
-      prompt: generatePrompt(req.body.startup),
+    const completion = await openaiInstance.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: "You are a friendly AI startup name generator. Always respond in a conversational way and provide exactly 3 creative startup names with brief explanations."
+        },
+        {
+          role: "user",
+          content: generatePrompt(req.body.startup)
+        }
+      ],
       temperature: 0.6,
+      max_tokens: 500,
     });
-    res.status(200).json({ result: completion.data.choices[0].text });
+    res.status(200).json({ result: completion.data.choices[0].message.content });
   } catch (error) {
     console.error("OpenAI API error:", error);
     res.status(500).json({ error: "Failed to generate startup names" });
@@ -35,17 +45,5 @@ export default async function (req, res) {
 function generatePrompt(startup) {
   const capitalizedStartup =
     startup[0].toUpperCase() + startup.slice(1).toLowerCase();
-  return `As a friendly AI startup name generator, suggest 3 creative and memorable names for a ${capitalizedStartup} startup. Format your response in a conversational way.
-
-Example format:
-"Great idea for a ${capitalizedStartup} startup! Here are 3 creative names I came up with:
-
-🚀 [Name 1] - [brief reason why it's good]
-💡 [Name 2] - [brief reason why it's good]
-⭐ [Name 3] - [brief reason why it's good]
-
-Which one resonates with you? I can generate more options if needed!"
-
-Domain: ${capitalizedStartup}
-Response:`;
+  return `I'm building a ${capitalizedStartup} startup. Can you suggest 3 creative and memorable names with brief explanations for each?`;
 }
