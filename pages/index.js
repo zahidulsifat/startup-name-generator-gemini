@@ -161,7 +161,7 @@ export default function Home() {
   async function startRecording() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
+      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
       const audioChunks = [];
 
       recorder.ondataavailable = (event) => {
@@ -169,8 +169,12 @@ export default function Home() {
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        // Here you could convert audio to text using speech recognition API
+        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setRecordedAudio(e.target.result);
+        };
+        reader.readAsDataURL(audioBlob);
         stream.getTracks().forEach(track => track.stop());
       };
 
