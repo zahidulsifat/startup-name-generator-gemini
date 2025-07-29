@@ -486,16 +486,35 @@
   .chatHeader {
     padding: 15px;
   }
-  
+
   .chatHeader h1 {
     font-size: 16px;
   }
-  
+
   .messagesContainer {
     padding: 10px;
   }
-  
+
   .inputContainer {
     padding: 15px;
+  }
+
+  .inputActions {
+    gap: 6px;
+  }
+
+  .actionButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .previewImage {
+    width: 60px;
+    height: 60px;
+  }
+
+  .messageImage {
+    max-width: 150px;
+    max-height: 150px;
   }
 }
