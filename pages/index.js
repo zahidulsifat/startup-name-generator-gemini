@@ -12,9 +12,7 @@ export default function Home() {
     }
   ]);
   const [inputMessage, setInputMessage] = useState("");
-  const [openaiApiKey, setOpenaiApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showApiKeyInput, setShowApiKeyInput] = useState(true);
   const [isClient, setIsClient] = useState(false);
   const messagesEndRef = useRef(null);
 
@@ -52,9 +50,8 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          startup: inputMessage,
-          openaiApiKey: openaiApiKey,
-        }),
+        startup: inputMessage,
+      }),
       });
       const data = await response.json();
 
@@ -139,25 +136,6 @@ export default function Home() {
         </div>
 
         <div className={styles.inputContainer}>
-          {showApiKeyInput && (
-            <div className={styles.apiKeySection}>
-              <input
-                type="password"
-                placeholder="🔑 Enter your OpenAI API key"
-                value={openaiApiKey}
-                onChange={(e) => setOpenaiApiKey(e.target.value)}
-                className={styles.apiKeyInput}
-              />
-              <button
-                onClick={() => setShowApiKeyInput(false)}
-                className={styles.hideApiKey}
-                disabled={!openaiApiKey}
-              >
-                ✓
-              </button>
-            </div>
-          )}
-
           <form onSubmit={sendMessage} className={styles.messageForm}>
             <input
               type="text"
