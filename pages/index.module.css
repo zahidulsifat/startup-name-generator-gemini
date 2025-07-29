@@ -611,11 +611,20 @@
   }
 
   .inputContainer {
-    padding: 18px;
+    padding: 12px;
   }
 
   .inputActions {
     gap: 8px;
+  }
+
+  .inputRow {
+    gap: 6px;
+  }
+
+  .messageInput {
+    min-width: 0;
+    flex: 1;
   }
 
   .actionButton {
