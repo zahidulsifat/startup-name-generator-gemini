@@ -248,7 +248,6 @@
 .apiKeyInput:focus {
   border-color: #10a37f;
   background: white;
-  box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);
 }
 
 .hideApiKey {
