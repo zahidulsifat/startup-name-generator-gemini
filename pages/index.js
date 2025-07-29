@@ -162,6 +162,10 @@ export default function Home() {
     }
   }
 
+  function removeRecordedAudio() {
+    setRecordedAudio(null);
+  }
+
   async function startRecording() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
