@@ -216,6 +216,108 @@
   border-top: 1px solid #e2e8f0;
 }
 
+.imagePreview {
+  margin-bottom: 12px;
+  position: relative;
+  display: inline-block;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+}
+
+.previewImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  display: block;
+}
+
+.removeImageButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.removeImageButton:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.inputActions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.actionButton {
+  background: #f1f5f9;
+  color: #475569;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+.actionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.actionButton.recording {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.imageContainer {
+  margin-bottom: 8px;
+}
+
+.messageImage {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 .apiKeySection {
   display: flex;
   gap: 8px;
