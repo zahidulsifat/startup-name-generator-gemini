@@ -1,9 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+import OpenAI from "openai";
 
 export default async function (req, res) {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -14,13 +9,11 @@ export default async function (req, res) {
   }
 
   try {
-    // Create a new configuration and OpenAI instance for each request
-    const config = new Configuration({
+    const openai = new OpenAI({
       apiKey: apiKey,
     });
-    const openaiInstance = new OpenAIApi(config);
 
-    const completion = await openaiInstance.createChatCompletion({
+    const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         {
@@ -35,7 +28,7 @@ export default async function (req, res) {
       temperature: 0.6,
       max_tokens: 500,
     });
-    res.status(200).json({ result: completion.data.choices[0].message.content });
+    res.status(200).json({ result: completion.choices[0].message.content });
   } catch (error) {
     console.error("OpenAI API error:", error);
     res.status(500).json({ error: "Failed to generate startup names" });
