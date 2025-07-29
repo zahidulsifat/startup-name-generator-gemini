@@ -399,24 +399,26 @@
 
 .messageInput {
   flex: 1;
-  padding: 12px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 20px;
+  padding: 14px 18px;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
   font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
   outline: none;
   resize: none;
   transition: all 0.2s ease;
-  background: #f8fafc;
+  background: #fdfdfd;
   min-height: 44px;
 }
 
 .messageInput:focus {
-  border-color: #10a37f;
+  border-color: #ddd;
   background: white;
 }
 
 .messageInput:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
