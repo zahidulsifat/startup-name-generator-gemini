@@ -147,6 +147,12 @@ export default function Home() {
     }
   }
 
+  function toggleDarkMode() {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
+  }
+
   return (
     <div className={styles.container}>
       <Head>
