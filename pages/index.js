@@ -56,7 +56,7 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api/gemini", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
