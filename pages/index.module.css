@@ -12,6 +12,13 @@
   padding: 24px;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 8px;
+    justify-content: flex-start;
+  }
+}
+
 .chatContainer {
   box-sizing: border-box;
   background: white;
@@ -26,6 +33,14 @@
   position: relative;
 }
 
+@media (max-width: 768px) {
+  .chatContainer {
+    height: calc(100vh - 16px);
+    border-radius: 8px;
+    max-width: 100%;
+  }
+}
+
 .chatHeader {
   background: white;
   color: #1f1f1f;
@@ -34,6 +49,13 @@
   align-items: center;
   gap: 16px;
   border-bottom: 1px solid #f5f5f5;
+}
+
+@media (max-width: 768px) {
+  .chatHeader {
+    padding: 16px;
+    gap: 12px;
+  }
 }
 
 .botAvatar {
