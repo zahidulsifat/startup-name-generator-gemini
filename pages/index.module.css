@@ -282,6 +282,67 @@
   background: rgba(0, 0, 0, 0.8);
 }
 
+.audioPreview {
+  position: relative;
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.audioInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.audioInfo span {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.audioPlayer {
+  width: 100%;
+  height: 32px;
+}
+
+.removeAudioButton {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.removeAudioButton:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.audioContainer {
+  margin: 8px 0;
+}
+
+.messageAudio {
+  width: 100%;
+  max-width: 250px;
+  height: 32px;
+}
+
 .inputActions {
   display: flex;
   gap: 10px;
