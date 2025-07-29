@@ -384,6 +384,12 @@
   gap: 8px;
 }
 
+.inputRow {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
 .messageInput {
   flex: 1;
   padding: 12px 16px;
