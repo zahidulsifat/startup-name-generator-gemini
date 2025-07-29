@@ -588,11 +588,22 @@
   }
 
   .chatHeader {
-    padding: 20px;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .headerInfo h1 {
+    font-size: 18px;
+  }
+
+  .darkModeToggle {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
   }
 
   .messagesContainer {
-    padding: 20px;
+    padding: 16px;
   }
 
   .messageContent {
