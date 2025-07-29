@@ -85,12 +85,12 @@
 
 .messagesContainer {
   flex: 1;
-  padding: 20px;
+  padding: 24px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  background: #f8fafc;
+  gap: 20px;
+  background: #fdfdfd;
 }
 
 .messagesContainer::-webkit-scrollbar {
