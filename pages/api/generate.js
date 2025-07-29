@@ -6,10 +6,10 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
-  const apiKey = req.body.openaiApiKey || process.env.OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {
-    res.status(500).json({ error: "OpenAI API key not configured" });
+    res.status(500).json({ error: "OpenAI API key not configured on server" });
     return;
   }
 
