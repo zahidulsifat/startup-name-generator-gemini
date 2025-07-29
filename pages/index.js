@@ -41,19 +41,22 @@ export default function Home() {
 
   async function sendMessage(event) {
     event.preventDefault();
-    if (!inputMessage.trim() && !selectedImage) return;
+    if (!inputMessage.trim() && !selectedImage && !recordedAudio) return;
 
     const userMessage = {
       id: Date.now(),
       type: 'user',
-      text: inputMessage,
+      text: inputMessage || (recordedAudio ? '🎤 Voice message' : ''),
       image: selectedImage,
+      audio: recordedAudio,
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
     setInputMessage("");
     setSelectedImage(null);
+    const audioToSend = recordedAudio;
+    setRecordedAudio(null);
     setIsLoading(true);
 
     try {
@@ -65,6 +68,7 @@ export default function Home() {
         body: JSON.stringify({
         startup: inputMessage,
         image: selectedImage,
+        audio: audioToSend,
       }),
       });
       const data = await response.json();
