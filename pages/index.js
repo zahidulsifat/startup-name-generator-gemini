@@ -17,6 +17,7 @@ export default function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
