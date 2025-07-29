@@ -31,12 +31,17 @@ export default async function (req, res) {
 function generatePrompt(startup) {
   const capitalizedStartup =
     startup[0].toUpperCase() + startup.slice(1).toLowerCase();
-  return `Suggest three names for an USA tech startup domain.
-  
-  Domain: Payment gateway
-  Names: Zoomer Pay, Slay Pay, No Cap Payment
-  Domain: Clothing
-  Names: Drip Check, Bussin Wear, Boujee Clothes 
-  Domain: ${capitalizedStartup}
-  Names:`;
+  return `As a friendly AI startup name generator, suggest 3 creative and memorable names for a ${capitalizedStartup} startup. Format your response in a conversational way.
+
+Example format:
+"Great idea for a ${capitalizedStartup} startup! Here are 3 creative names I came up with:
+
+🚀 [Name 1] - [brief reason why it's good]
+💡 [Name 2] - [brief reason why it's good]
+⭐ [Name 3] - [brief reason why it's good]
+
+Which one resonates with you? I can generate more options if needed!"
+
+Domain: ${capitalizedStartup}
+Response:`;
 }
