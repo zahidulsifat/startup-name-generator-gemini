@@ -1,6 +1,5 @@
 # Gemini AI Startup Name Generator
 
-![Open AI Startup Name Generator Screenshot]
 
 ## Setup
 
@@ -24,7 +23,7 @@
    ```bash
    $ cp .env.example .env
    ```
-6. Add your [API key]([https://aistudio.google.com/prompts/new_chat]) to the newly created `.env` file
+6. Add your [API key](https://aistudio.google.com/prompts/new_chat) to the newly created `.env` file
 
 7. Run the app
 
