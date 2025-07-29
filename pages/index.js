@@ -27,6 +27,11 @@ export default function Home() {
 
   useEffect(() => {
     setIsClient(true);
+    // Load dark mode preference from localStorage
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode) {
+      setIsDarkMode(JSON.parse(savedDarkMode));
+    }
   }, []);
 
   useEffect(() => {
