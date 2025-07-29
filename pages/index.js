@@ -154,7 +154,7 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isDarkMode ? styles.darkMode : ''}`}>
       <Head>
         <title>AI Startup Name Generator</title>
         <link rel="icon" href="/logo.png" />
