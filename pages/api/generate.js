@@ -8,15 +8,24 @@ const openai = new OpenAIApi(configuration);
 export default async function (req, res) {
   if (req.body.openaiApiKey) {
     configuration.apiKey = req.body.openaiApiKey;
-    console.log(configuration.apiKey);
+  }
+
+  if (!configuration.apiKey) {
+    res.status(500).json({ error: "OpenAI API key not configured" });
     return;
   }
-  const completion = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: generatePrompt(req.body.startup),
-    temperature: 0.6,
-  });
-  res.status(200).json({ result: completion.data.choices[0].text });
+
+  try {
+    const completion = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: generatePrompt(req.body.startup),
+      temperature: 0.6,
+    });
+    res.status(200).json({ result: completion.data.choices[0].text });
+  } catch (error) {
+    console.error("OpenAI API error:", error);
+    res.status(500).json({ error: "Failed to generate startup names" });
+  }
 }
 
 function generatePrompt(startup) {
