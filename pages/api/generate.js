@@ -6,17 +6,21 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
-  if (req.body.openaiApiKey) {
-    configuration.apiKey = req.body.openaiApiKey;
-  }
+  const apiKey = req.body.openaiApiKey || process.env.OPENAI_API_KEY;
 
-  if (!configuration.apiKey) {
+  if (!apiKey) {
     res.status(500).json({ error: "OpenAI API key not configured" });
     return;
   }
 
   try {
-    const completion = await openai.createCompletion({
+    // Create a new configuration and OpenAI instance for each request
+    const config = new Configuration({
+      apiKey: apiKey,
+    });
+    const openaiInstance = new OpenAIApi(config);
+
+    const completion = await openaiInstance.createCompletion({
       model: "text-davinci-003",
       prompt: generatePrompt(req.body.startup),
       temperature: 0.6,
