@@ -545,4 +545,132 @@
     max-width: 140px;
     max-height: 140px;
   }
+
+  .darkModeToggle {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Dark Mode Styles */
+.container.darkMode {
+  background: #0f0f0f;
+  color: #e5e5e5;
+}
+
+.chatContainer.darkMode {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+}
+
+.darkMode .chatHeader {
+  background: #1a1a1a;
+  color: #e5e5e5;
+  border-bottom-color: #2a2a2a;
+}
+
+.darkMode .botAvatar {
+  background: #2a2a2a;
+}
+
+.darkMode .headerInfo h1 {
+  color: #e5e5e5;
+}
+
+.darkMode .status {
+  color: #a0a0a0;
+}
+
+.darkMode .messagesContainer {
+  background: #141414;
+}
+
+.darkMode .messagesContainer::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+}
+
+.darkMode .avatar {
+  background: #2a2a2a;
+}
+
+.darkMode .messageBubble {
+  background: #262626;
+  border-color: #3a3a3a;
+  color: #e5e5e5;
+}
+
+.darkMode .userMessage .messageBubble {
+  background: #e5e5e5;
+  color: #1a1a1a;
+}
+
+.darkMode .typingIndicator span {
+  background: #666;
+}
+
+.darkMode .inputContainer {
+  background: #1a1a1a;
+  border-top-color: #2a2a2a;
+}
+
+.darkMode .imagePreview {
+  border-color: #3a3a3a;
+}
+
+.darkMode .actionButton {
+  background: #2a2a2a;
+  color: #a0a0a0;
+  border-color: #3a3a3a;
+}
+
+.darkMode .actionButton:hover:not(:disabled) {
+  background: #3a3a3a;
+  color: #e5e5e5;
+}
+
+.darkMode .messageInput {
+  background: #262626;
+  border-color: #3a3a3a;
+  color: #e5e5e5;
+}
+
+.darkMode .messageInput:focus {
+  background: #2a2a2a;
+  border-color: #4a4a4a;
+}
+
+.darkMode .messageInput::placeholder {
+  color: #666;
+}
+
+.darkMode .sendButton {
+  background: #e5e5e5;
+  color: #1a1a1a;
+}
+
+.darkMode .sendButton:hover:not(:disabled) {
+  background: #d0d0d0;
+}
+
+.darkModeToggle.darkMode {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #a0a0a0;
+}
+
+.darkModeToggle.darkMode:hover {
+  background: #3a3a3a;
+  color: #e5e5e5;
+}
+
+.darkMode .footer {
+  color: #666;
+}
+
+.darkMode .footer a {
+  color: #a0a0a0;
+}
+
+.darkMode .footer a:hover {
+  color: #e5e5e5;
 }
