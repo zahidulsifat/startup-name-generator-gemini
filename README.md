@@ -1,6 +1,6 @@
 # Gemini AI Startup Name Generator
 
-![Computer View](https://github.com/zahidulsifat/startup-name-generator-gemini/blob/main/Preview.PNG)
+![Preview](https://github.com/zahidulsifat/startup-name-generator-gemini/blob/main/Preview.png)
 
 
 
