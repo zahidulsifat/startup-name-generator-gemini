@@ -31,7 +31,13 @@ export default function Home() {
     // Load dark mode preference from localStorage
     const savedDarkMode = localStorage.getItem('darkMode');
     if (savedDarkMode) {
-      setIsDarkMode(JSON.parse(savedDarkMode));
+      const darkModeValue = JSON.parse(savedDarkMode);
+      setIsDarkMode(darkModeValue);
+      // Apply dark mode to the entire document
+      if (darkModeValue) {
+        document.documentElement.classList.add('dark-mode');
+        document.body.classList.add('dark-mode');
+      }
     }
   }, []);
 
@@ -252,6 +258,15 @@ export default function Home() {
     const newDarkMode = !isDarkMode;
     setIsDarkMode(newDarkMode);
     localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
+
+    // Apply dark mode to the entire document
+    if (newDarkMode) {
+      document.documentElement.classList.add('dark-mode');
+      document.body.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+      document.body.classList.remove('dark-mode');
+    }
   }
 
   return (
