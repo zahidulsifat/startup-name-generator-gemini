@@ -1,0 +1,23 @@
+/* Global Dark Mode Styles */
+html.dark-mode {
+  background: #0a0a0a !important;
+  color-scheme: dark;
+}
+
+body.dark-mode {
+  background: #0a0a0a !important;
+  color: #e5e5e5 !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Reset default margins and padding */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+/* Ensure smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
