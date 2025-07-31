@@ -1,5 +1,6 @@
 # Gemini AI Startup Name Generator
 
+## Preview
 ![Preview](https://github.com/zahidulsifat/startup-name-generator-gemini/blob/main/Preview.png)
 
 
