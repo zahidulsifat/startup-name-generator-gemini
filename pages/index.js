@@ -18,7 +18,7 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [recordedAudio, setRecordedAudio] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -28,16 +28,18 @@ export default function Home() {
 
   useEffect(() => {
     setIsClient(true);
-    // Load dark mode preference from localStorage
+    // Load dark mode preference from localStorage, default to true
     const savedDarkMode = localStorage.getItem('darkMode');
-    if (savedDarkMode) {
-      const darkModeValue = JSON.parse(savedDarkMode);
-      setIsDarkMode(darkModeValue);
-      // Apply dark mode to the entire document
-      if (darkModeValue) {
-        document.documentElement.classList.add('dark-mode');
-        document.body.classList.add('dark-mode');
-      }
+    const darkModeValue = savedDarkMode ? JSON.parse(savedDarkMode) : true;
+    setIsDarkMode(darkModeValue);
+    // Apply dark mode to the entire document
+    if (darkModeValue) {
+      document.documentElement.classList.add('dark-mode');
+      document.body.classList.add('dark-mode');
+    }
+    // Save default dark mode preference if not set
+    if (!savedDarkMode) {
+      localStorage.setItem('darkMode', JSON.stringify(true));
     }
   }, []);
 
@@ -283,7 +285,7 @@ export default function Home() {
             <img src="/logo.png" alt="AI Bot" />
           </div>
           <div className={styles.headerInfo}>
-            <h1>AI Startup Generator</h1>
+            <h1>AI Startup Name Generator</h1>
             <span className={styles.status}>Online</span>
           </div>
           <button

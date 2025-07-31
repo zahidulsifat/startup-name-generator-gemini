@@ -43,7 +43,7 @@ export default async function handler(req, res) {
       // Add context for image analysis
       if (!startup) {
         parts.push({
-          text: "Based on this image, suggest 3 creative startup names with brief explanations for each. Be conversational and friendly in your response."
+          text: "Based on this image, suggest 3 creative startup names with brief explanations for each. Please format your response with clear spacing between each name suggestion, and provide detailed explanations for each name choice. Be conversational and friendly in your response."
         });
       } else {
         parts.push({
@@ -66,7 +66,7 @@ export default async function handler(req, res) {
 
       if (!startup && !image) {
         parts.push({
-          text: "Based on this audio, suggest 3 creative startup names with brief explanations for each. Be conversational and friendly in your response."
+          text: "Based on this audio, suggest 3 creative startup names with brief explanations for each. Please format your response with clear spacing between each name suggestion, and provide detailed explanations for each name choice. Be conversational and friendly in your response."
         });
       } else {
         parts.push({
@@ -167,5 +167,5 @@ export default async function handler(req, res) {
 
 function generatePrompt(startup) {
   const capitalizedStartup = startup[0].toUpperCase() + startup.slice(1).toLowerCase();
-  return `I'm building a ${capitalizedStartup} startup. Can you suggest 3 creative and memorable names with brief explanations for each? Please provide them in a friendly, conversational way.`;
+  return `I'm building a ${capitalizedStartup} startup. Can you suggest 3 creative and memorable names with brief explanations for each? Please format your response with clear spacing between each name suggestion, and provide detailed explanations for each name choice. Be friendly and conversational in your response.`;
 }
